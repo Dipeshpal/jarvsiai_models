@@ -4,8 +4,6 @@ from pyngrok import ngrok
 import requests
 
 
-
-
 @st.cache(allow_output_mutation=True)
 def load_model():
     question_answerer = pipeline("question-answering", model='bert-large-uncased-whole-word-masking-finetuned-squad')
@@ -41,7 +39,9 @@ if not hasattr(st, 'already_started_server'):
 
     @app.get("/")
     def read_root():
-        return {"Hello": "World"}
+        ans = get_data("What is my name?", "My name is Dipesh")
+        print(ans)
+        return {"Hello": f"World: {ans}"}
 
 
     @app.get("/items/{item_id}")
@@ -51,10 +51,6 @@ if not hasattr(st, 'already_started_server'):
 
     endpoint = ngrok.connect(8888).public_url
     st.write(endpoint)
-
-    ans = get_data("What is my name?", "My name is Dipesh")
-    print(ans)
-    st.write(ans)
 
     status = requests.get(
         f'https://jarvis-ai-api.herokuapp.com/update_api_endpoint/?username=dipeshpal&token=5d57286c59a3c6d8c30e1d6675c0a6&endpoint={st.secrets["token"]}')

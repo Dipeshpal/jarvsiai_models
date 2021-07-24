@@ -1,7 +1,24 @@
 import streamlit as st
-# from transformers import pipeline
+from transformers import pipeline
 from pyngrok import ngrok
 import requests
+
+
+
+
+@st.cache(allow_output_mutation=True)
+def load_model():
+    question_answerer = pipeline("question-answering", model='bert-large-uncased-whole-word-masking-finetuned-squad')
+    return question_answerer
+
+
+def get_data(question, context):
+    question_answerer = load_model()
+    a = question_answerer(
+        question=question,
+        context=context
+    )
+    return a['answer']
 
 
 url = "None"
@@ -15,15 +32,6 @@ if not hasattr(st, 'already_started_server'):
             Just close this browser tab and open a new one to see your Streamlit
             app.
         ''')
-
-    # from flask import Flask
-    #
-    # app = Flask(__name__)
-    #
-    # @app.route('/foo')
-    # def serve_foo():
-    #     return 'This page is served via Flask!'
-
     from typing import Optional
     from fastapi import FastAPI
     import os
@@ -42,28 +50,15 @@ if not hasattr(st, 'already_started_server'):
 
 
     endpoint = ngrok.connect(8888).public_url
-    print(' * Tunnel URL:', endpoint)
+    st.write(endpoint)
+
+    ans = get_data("What is my name?", "My name is Dipesh")
+    print(ans)
+    st.write(ans)
+
     status = requests.get(
-        f"https://jarvis-ai-api.herokuapp.com/update_api_endpoint/?username=dipeshpal&token=5d57286c59a3c6d8c30e1d6675c0a6&endpoint={endpoint}")
-    print("status: ", status)
-    # print("secrets: ",  st.secrets["token"])
-
+        f'https://jarvis-ai-api.herokuapp.com/update_api_endpoint/?username=dipeshpal&token=5d57286c59a3c6d8c30e1d6675c0a6&endpoint={st.secrets["token"]}')
     os.system('uvicorn main:app --host 127.0.0.1 --port 8888')
-
-
-@st.cache(allow_output_mutation=True)
-def load_model():
-    # question_answerer = pipeline("question-answering", model='bert-large-uncased-whole-word-masking-finetuned-squad')
-    return "question_answerer"
-
-
-def get_data(question, context):
-    question_answerer = load_model()
-    a = question_answerer(
-        question=question,
-        context=context
-    )
-    return a['answer']
 
 
 # this is the main function in which we define our webpage

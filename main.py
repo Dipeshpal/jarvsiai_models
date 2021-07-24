@@ -34,28 +34,17 @@ if not hasattr(st, 'already_started_server'):
     import os
 
     app = FastAPI()
-    question_answerer2 = pipeline("question-answering", model='bert-large-uncased-whole-word-masking-finetuned-squad')
-
 
     @app.get("/")
     def read_root():
         return {"Hello": f"World"}
 
-
-    @app.post('/predict')
-    def read_item(question: str, context: str):
-        a = question_answerer2(
-            question=question,
-            context=context
-        )
-        return {"ans": a['answer']}
-
-
     endpoint = ngrok.connect(8888).public_url
 
     status = requests.get(
         f'https://jarvis-ai-api.herokuapp.com/update_api_endpoint/?username=dipeshpal&token={st.secrets["token"]}&endpoint={endpoint}')
-    os.system('uvicorn main:app --host 127.0.0.1 --port 8888')
+    print("endpoint------------------------------", endpoint)
+    print(os.system('uvicorn main:app --host 127.0.0.1 --port 8888'))
 
 
 # this is the main function in which we define our webpage

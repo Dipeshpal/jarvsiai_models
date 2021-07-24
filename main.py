@@ -10,23 +10,38 @@ if not hasattr(st, 'already_started_server'):
 
     st.write('''
             The first time this script executes it will run forever because it's
-            running a Flask server.
+            running a FastAPI server.
 
             Just close this browser tab and open a new one to see your Streamlit
             app.
         ''')
 
-    from flask import Flask
+    # from flask import Flask
+    #
+    # app = Flask(__name__)
+    #
+    # @app.route('/foo')
+    # def serve_foo():
+    #     return 'This page is served via Flask!'
 
-    app = Flask(__name__)
+    from typing import Optional
+
+    from fastapi import FastAPI
+
+    app = FastAPI()
 
 
-    @app.route('/foo')
-    def serve_foo():
-        return 'This page is served via Flask!'
+    @app.get("/")
+    def read_root():
+        return {"Hello": "World"}
 
 
-    endpoint = ngrok.connect(8888).public_url
+    @app.get("/items/{item_id}")
+    def read_item(item_id: int, q: Optional[str] = None):
+        return {"item_id": item_id, "q": q}
+
+
+    endpoint = ngrok.connect(8000).public_url
     print(' * Tunnel URL:', endpoint)
     status = requests.get(
         f"https://jarvis-ai-api.herokuapp.com/update_api_endpoint/?username=dipeshpal&token=5d57286c59a3c6d8c30e1d6675c0a6&endpoint={endpoint}")

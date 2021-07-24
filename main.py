@@ -30,25 +30,25 @@ if not hasattr(st, 'already_started_server'):
             Just close this browser tab and open a new one to see your Streamlit
             app.
         ''')
-    from typing import Optional
     from fastapi import FastAPI
     import os
 
     app = FastAPI()
+    question_answerer = load_model()
 
-
-    
 
     @app.get("/")
     def read_root():
-        ans = "hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"
-        print(ans)
-        return {"Hello": f"World: {ans}"}
+        return {"Hello": f"World"}
 
 
-    @app.get("/items/{item_id}")
-    def read_item(item_id: int, q: Optional[str] = None):
-        return {"item_id": item_id, "q": q}
+    @app.post('/predict')
+    def read_item(question: str, context: str):
+        a = question_answerer(
+            question=question,
+            context=context
+        )
+        return {"ans": a['answer']}
 
 
     endpoint = ngrok.connect(8888).public_url

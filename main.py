@@ -37,9 +37,23 @@ if not hasattr(st, 'already_started_server'):
     app = FastAPI()
 
 
+    def load_model_local():
+        question_answerer = pipeline("question-answering",
+                                     model='bert-large-uncased-whole-word-masking-finetuned-squad')
+        return question_answerer
+
+
+    def get_data_local(question, context):
+        question_answerer = load_model_local()
+        a = question_answerer(
+            question=question,
+            context=context
+        )
+        return a['answer']
+
     @app.get("/")
     def read_root():
-        ans = get_data("What is my name?", "My name is Dipesh")
+        ans = get_data_local("What is my name?", "My name is Dipesh")
         print(ans)
         return {"Hello": f"World: {ans}"}
 
@@ -50,7 +64,6 @@ if not hasattr(st, 'already_started_server'):
 
 
     endpoint = ngrok.connect(8888).public_url
-    st.write(endpoint)
 
     status = requests.get(
         f'https://jarvis-ai-api.herokuapp.com/update_api_endpoint/?username=dipeshpal&token={st.secrets["token"]}&endpoint={endpoint}')

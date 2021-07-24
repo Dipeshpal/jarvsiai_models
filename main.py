@@ -2,6 +2,7 @@ import streamlit as st
 from transformers import pipeline
 from pyngrok import ngrok
 import requests
+import op
 
 
 @st.cache(allow_output_mutation=True)
@@ -30,21 +31,31 @@ if not hasattr(st, 'already_started_server'):
             Just close this browser tab and open a new one to see your Streamlit
             app.
         ''')
-    from fastapi import FastAPI
+
     import os
 
-    app = FastAPI()
-
-    @app.get("/")
-    def read_root():
-        return {"Hello": f"World"}
-
-    endpoint = ngrok.connect(8888).public_url
-
+    endpoint = ngrok.connect(8000).public_url
     status = requests.get(
         f'https://jarvis-ai-api.herokuapp.com/update_api_endpoint/?username=dipeshpal&token={st.secrets["token"]}&endpoint={endpoint}')
     print("endpoint------------------------------", endpoint)
-    print(os.system('uvicorn main:app --host 127.0.0.1 --port 8888'))
+    os.system("opyrator launch-ui op:generate_text --port 8000")
+
+
+    # from fastapi import FastAPI
+    # import os
+
+    # app = FastAPI()
+    #
+    # @app.get("/")
+    # def read_root():
+    #     return {"Hello": f"World"}
+    #
+    # endpoint = ngrok.connect(8888).public_url
+    #
+    # status = requests.get(
+    #     f'https://jarvis-ai-api.herokuapp.com/update_api_endpoint/?username=dipeshpal&token={st.secrets["token"]}&endpoint={endpoint}')
+    # print("endpoint------------------------------", endpoint)
+    # os.system('uvicorn main:app --host 127.0.0.1 --port 8888')
 
 
 # this is the main function in which we define our webpage

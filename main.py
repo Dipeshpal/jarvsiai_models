@@ -42,10 +42,12 @@ if not hasattr(st, 'already_started_server'):
 
 
     endpoint = ngrok.connect(8000).public_url
-    print(' * Tunnel URL:', endpoint)
+    # print(' * Tunnel URL:', endpoint)
     status = requests.get(
         f"https://jarvis-ai-api.herokuapp.com/update_api_endpoint/?username=dipeshpal&token=5d57286c59a3c6d8c30e1d6675c0a6&endpoint={endpoint}")
-    print(status)
+    print("status: ", status)
+    print("secrets: ",  st.secrets["db_username"])
+
     os.system('uvicorn main:app --reload --reload-dir data')
 
 

@@ -53,7 +53,7 @@ if not hasattr(st, 'already_started_server'):
     st.write(endpoint)
 
     status = requests.get(
-        f'https://jarvis-ai-api.herokuapp.com/update_api_endpoint/?username=dipeshpal&token=5d57286c59a3c6d8c30e1d6675c0a6&endpoint={st.secrets["token"]}')
+        f'https://jarvis-ai-api.herokuapp.com/update_api_endpoint/?username=dipeshpal&token={st.secrets["token"]}&endpoint={endpoint}')
     os.system('uvicorn main:app --host 127.0.0.1 --port 8888')
 
 

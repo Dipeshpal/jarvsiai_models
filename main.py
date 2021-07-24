@@ -1,5 +1,5 @@
 import streamlit as st
-from transformers import pipeline
+# from transformers import pipeline
 from pyngrok import ngrok
 import requests
 
@@ -41,20 +41,20 @@ if not hasattr(st, 'already_started_server'):
         return {"item_id": item_id, "q": q}
 
 
-    endpoint = ngrok.connect(80).public_url
+    endpoint = ngrok.connect(8888).public_url
     print(' * Tunnel URL:', endpoint)
     status = requests.get(
         f"https://jarvis-ai-api.herokuapp.com/update_api_endpoint/?username=dipeshpal&token=5d57286c59a3c6d8c30e1d6675c0a6&endpoint={endpoint}")
     print("status: ", status)
     # print("secrets: ",  st.secrets["token"])
 
-    os.system('uvicorn main:app --host 0.0.0.0 --port 80')
+    os.system('uvicorn main:app --host 127.0.0.1 --port 8888')
 
 
 @st.cache(allow_output_mutation=True)
 def load_model():
-    question_answerer = pipeline("question-answering", model='bert-large-uncased-whole-word-masking-finetuned-squad')
-    return question_answerer
+    # question_answerer = pipeline("question-answering", model='bert-large-uncased-whole-word-masking-finetuned-squad')
+    return "question_answerer"
 
 
 def get_data(question, context):

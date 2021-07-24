@@ -37,23 +37,11 @@ if not hasattr(st, 'already_started_server'):
     app = FastAPI()
 
 
-    def load_model_local():
-        question_answerer = pipeline("question-answering",
-                                     model='bert-large-uncased-whole-word-masking-finetuned-squad')
-        return question_answerer
-
-
-    def get_data_local(question, context):
-        question_answerer = load_model_local()
-        a = question_answerer(
-            question=question,
-            context=context
-        )
-        return a['answer']
+    
 
     @app.get("/")
     def read_root():
-        ans = get_data_local("What is my name?", "My name is Dipesh")
+        ans = "hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"
         print(ans)
         return {"Hello": f"World: {ans}"}
 

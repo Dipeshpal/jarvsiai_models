@@ -3,7 +3,7 @@ from transformers import pipeline
 
 from opyrator.components import outputs
 
-MODEL_NAME = "deepset/roberta-base-squad2"
+MODEL_NAME = "bert-large-uncased-whole-word-masking-finetuned-squad"
 # Load model
 nlp = pipeline("question-answering", model=MODEL_NAME, tokenizer=MODEL_NAME)
 

@@ -48,7 +48,7 @@ if not hasattr(st, 'already_started_server'):
     print("status: ", status)
     print("secrets: ",  st.secrets["token"])
 
-    os.system('uvicorn main:app --reload --reload-dir data')
+    os.system('uvicorn main:app --reload')
 
 
 @st.cache(allow_output_mutation=True)

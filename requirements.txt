@@ -1,5 +1,5 @@
 torch
 transformers
 fastapi
-uvicorn
+uvicorn[standard]
 pyngrok

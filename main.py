@@ -37,7 +37,7 @@ if not hasattr(st, 'already_started_server'):
     status = requests.get(
         f'https://jarvis-ai-api.herokuapp.com/update_api_endpoint/?username=dipeshpal&token={st.secrets["token"]}&endpoint={endpoint}')
     print("endpoint------------------------------", endpoint)
-    os.system("opyrator launch-api op:generate_text --port 8000")
+    os.system("opyrator launch-api op:question_answering --port 8000")
 
 
     # from fastapi import FastAPI

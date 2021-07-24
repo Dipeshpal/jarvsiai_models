@@ -34,7 +34,7 @@ if not hasattr(st, 'already_started_server'):
     import os
 
     app = FastAPI()
-    question_answerer = load_model()
+    question_answerer2 = pipeline("question-answering", model='bert-large-uncased-whole-word-masking-finetuned-squad')
 
 
     @app.get("/")
@@ -44,7 +44,7 @@ if not hasattr(st, 'already_started_server'):
 
     @app.post('/predict')
     def read_item(question: str, context: str):
-        a = question_answerer(
+        a = question_answerer2(
             question=question,
             context=context
         )

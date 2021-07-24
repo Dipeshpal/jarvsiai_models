@@ -25,8 +25,8 @@ if not hasattr(st, 'already_started_server'):
     #     return 'This page is served via Flask!'
 
     from typing import Optional
-
     from fastapi import FastAPI
+    import os
 
     app = FastAPI()
 
@@ -46,7 +46,7 @@ if not hasattr(st, 'already_started_server'):
     status = requests.get(
         f"https://jarvis-ai-api.herokuapp.com/update_api_endpoint/?username=dipeshpal&token=5d57286c59a3c6d8c30e1d6675c0a6&endpoint={endpoint}")
     print(status)
-    app.run(port=8888)
+    os.system('uvicorn main:app --reload --reload-dir data')
 
 
 @st.cache(allow_output_mutation=True)

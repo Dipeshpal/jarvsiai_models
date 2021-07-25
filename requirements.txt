@@ -5,3 +5,4 @@ opyrator
 ffmpeg
 numpy
 scipy
+pydub

@@ -3,7 +3,7 @@ import torch
 from scipy.io import wavfile
 import numpy as np
 from scipy import interpolate
-from pydub import AudioSegment
+# from pydub import AudioSegment
 
 
 model = Wav2Vec2ForCTC.from_pretrained("facebook/wav2vec2-large-960h-lv60-self")
@@ -45,7 +45,7 @@ from opyrator.components.types import FileContent
 
 
 class AudioSeparationInput(BaseModel):
-    audio_file: FileContent = Field(..., mime_type="audio/mpeg")
+    audio_file: FileContent = Field(..., mime_type="audio/wav")
 
 
 class Output(BaseModel):
@@ -56,12 +56,12 @@ def separate_audio(input: AudioSeparationInput) -> Output:
     """Separation of a music file to vocals (singing voice) and accompaniment.
     To try it out, you can use this example audio file: [audio_example.mp3](https://github.com/deezer/spleeter/raw/master/audio_example.mp3).
     """
-    with open("my_file.mp3", "wb") as binary_file:
+    with open("my_file.wav", "wb") as binary_file:
         binary_file.write(input.audio_file.as_bytes())
 
     # print("------------------------------------")
-    sound = AudioSegment.from_mp3("my_file.mp3")
-    sound.export("my_file.wav", format="wav")
+    # sound = AudioSegment.from_mp3("my_file.mp3")
+    # sound.export("my_file.wav", format="wav")
     # transcription = predict("my_file.wav")
     transcription = "transcription"
     print(transcription)

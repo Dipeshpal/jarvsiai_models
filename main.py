@@ -25,7 +25,7 @@ if not hasattr(st, 'already_started_server'):
 
     st.write('''
             The first time this script executes it will run forever because it's
-            running a FastAPI server.
+            running a Opyrator server.
 
             Just close this browser tab and open a new one to see your Streamlit
             app.
@@ -37,24 +37,7 @@ if not hasattr(st, 'already_started_server'):
     status = requests.get(
         f'https://jarvis-ai-api.herokuapp.com/update_api_endpoint/?username=dipeshpal&token={st.secrets["token"]}&endpoint={endpoint}')
     print("endpoint------------------------------", endpoint)
-    os.system("opyrator launch-api op:question_answering --port 8000")
-
-
-    # from fastapi import FastAPI
-    # import os
-
-    # app = FastAPI()
-    #
-    # @app.get("/")
-    # def read_root():
-    #     return {"Hello": f"World"}
-    #
-    # endpoint = ngrok.connect(8888).public_url
-    #
-    # status = requests.get(
-    #     f'https://jarvis-ai-api.herokuapp.com/update_api_endpoint/?username=dipeshpal&token={st.secrets["token"]}&endpoint={endpoint}')
-    # print("endpoint------------------------------", endpoint)
-    # os.system('uvicorn main:app --host 127.0.0.1 --port 8888')
+    os.system("opyrator launch-api exp:separate_audio --port 8000")
 
 
 # this is the main function in which we define our webpage

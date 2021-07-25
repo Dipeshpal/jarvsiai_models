@@ -33,12 +33,45 @@ if not hasattr(st, 'already_started_server'):
 
     import os
 
-    endpoint = ngrok.connect(8000).public_url
+
+    from joblib import Parallel, delayed
+    import os
+    from pyngrok import ngrok
+
+
+    def fastapi_models():
+        os.system("uvicorn asr_fastapi:app --reload --reload-dir data")
+
+
+    def opyrator_models():
+        os.system("opyrator launch-ui op_asr:separate_audio --port 8080")
+
+
+    def servers():
+        endpoint2 = ngrok.connect(8000).public_url
+        return endpoint2
+
+
+    models_running = []
+    models_running.append(delayed(fastapi_models)())
+    models_running.append(delayed(opyrator_models)())
+
+    server_list = []
+    server_list.append(delayed(servers)())
+
+    endpoint = ngrok.connect(8080).public_url
+    endpoint2 = Parallel(n_jobs=-1, verbose=11)(server_list)
+    print(endpoint, endpoint2[0])
+
+    endpoints = {
+        "opyrator": endpoint,
+        "fastapi": endpoint2[0]
+    }
     status = requests.get(
         f'https://jarvis-ai-api.herokuapp.com/update_api_endpoint/?username=dipeshpal&token={st.secrets["token"]}&endpoint={endpoint}')
-    print("endpoint------------------------------", endpoint)
-    # os.system("opyrator launch-ui op_asr:separate_audio --port 8000")
-    os.system("uvicorn asr_fastapi:app --reload --reload-dir data")
+    print("endpoint------------------------------", endpoints)
+
+    returned_data = Parallel(n_jobs=-1, verbose=11)(models_running)
 
 
 # this is the main function in which we define our webpage

@@ -43,7 +43,7 @@ from opyrator.components.types import FileContent
 
 
 class AudioSeparationInput(BaseModel):
-    audio_file: FileContent = Field(..., mime_type="audio/wav")
+    audio_file: FileContent = Field(...)
 
 
 class Output(BaseModel):
@@ -54,11 +54,11 @@ def separate_audio(input: AudioSeparationInput) -> Output:
     """Separation of a music file to vocals (singing voice) and accompaniment.
     To try it out, you can use this example audio file: [audio_example.mp3](https://github.com/deezer/spleeter/raw/master/audio_example.mp3).
     """
-    with open("my_file.mp3", "wb") as binary_file:
+    with open("my_file.wav", "wb") as binary_file:
         binary_file.write(input.audio_file.as_bytes())
 
-    print("------------------------------------")
-    transcription = predict("my_file.mp3")
+    # print("------------------------------------")
+    transcription = predict("my_file.wav")
     # transcription = "transcription"
     # print(transcription)
     return Output(results=transcription)

@@ -1,7 +1,9 @@
 from transformers import Wav2Vec2ForCTC, Wav2Vec2Tokenizer
 import torch
 import librosa
-
+import os
+os.system("apt-get install ffmpeg or apt-get install ffmpeg")
+os.system("apt-get install libsndfile1")
 
 model = Wav2Vec2ForCTC.from_pretrained("facebook/wav2vec2-large-960h-lv60-self")
 tokenizer = Wav2Vec2Tokenizer.from_pretrained("facebook/wav2vec2-large-960h-lv60-self")

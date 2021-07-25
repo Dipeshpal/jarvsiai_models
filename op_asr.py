@@ -47,7 +47,7 @@ class AudioSeparationInput(BaseModel):
 
 
 class Output(BaseModel):
-    results: str = None
+    results: str = Field(...)
 
 
 def separate_audio(input: AudioSeparationInput) -> Output:

@@ -59,6 +59,6 @@ def separate_audio(input: AudioSeparationInput) -> Output:
 
     print("------------------------------------")
     transcription = predict("my_file.mp3")
-    transcription = "transcription"
-    print(transcription)
+    # transcription = "transcription"
+    # print(transcription)
     return Output(results=transcription)

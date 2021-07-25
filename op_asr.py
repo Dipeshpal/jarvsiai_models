@@ -62,6 +62,9 @@ def separate_audio(input: AudioSeparationInput) -> Output:
     # sound = AudioSegment.from_mp3("my_file.mp3")
     # sound.export("my_file.wav", format="wav")
     # transcription = predict("my_file.wav")
-    transcription = os.uname()
-    print(str(transcription))
+    import platform
+    transcription = platform.uname()
+
+    transcription = transcription.system
+    # print(str(transcription['']))
     return Output(results=transcription)

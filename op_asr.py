@@ -1,9 +1,10 @@
 from transformers import Wav2Vec2ForCTC, Wav2Vec2Tokenizer
 import torch
+import os
 # from scipy.io import wavfile
 # import numpy as np
 # from scipy import interpolate
-import librosa
+# import librosa
 # from pydub import AudioSegment
 
 
@@ -60,7 +61,7 @@ def separate_audio(input: AudioSeparationInput) -> Output:
     # print("------------------------------------")
     # sound = AudioSegment.from_mp3("my_file.mp3")
     # sound.export("my_file.wav", format="wav")
-    transcription = predict("my_file.wav")
-    # transcription = "transcription"
-    # print(transcription)
+    # transcription = predict("my_file.wav")
+    transcription = os.uname()
+    print(str(transcription))
     return Output(results=transcription)

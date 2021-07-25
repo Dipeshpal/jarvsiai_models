@@ -43,7 +43,7 @@ from opyrator.components.types import FileContent
 
 
 class AudioSeparationInput(BaseModel):
-    audio_file: FileContent = Field(..., mime_type="audio/mpeg")
+    audio_file: FileContent = Field(..., mime_type="audio/wav")
 
 
 class Output(BaseModel):

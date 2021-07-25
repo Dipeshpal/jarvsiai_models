@@ -43,7 +43,7 @@ from opyrator.components.types import FileContent
 
 
 class AudioSeparationInput(BaseModel):
-    audio_file: FileContent = Field(...)
+    audio_file: FileContent = Field(..., mime_type="audio/mpeg")
 
 
 class Output(BaseModel):
@@ -58,7 +58,7 @@ def separate_audio(input: AudioSeparationInput) -> Output:
         binary_file.write(input.audio_file.as_bytes())
 
     # print("------------------------------------")
-    transcription = predict("my_file.wav")
-    # transcription = "transcription"
-    # print(transcription)
-    return Output(results=transcription)
+    # transcription = predict("my_file.wav")
+    transcription = "transcription"
+    print(transcription)
+    return Output(results=  transcription)

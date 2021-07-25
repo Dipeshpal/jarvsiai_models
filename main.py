@@ -63,10 +63,8 @@ if not hasattr(st, 'already_started_server'):
     endpoint2 = Parallel(n_jobs=-1, verbose=11)(server_list)
     print(endpoint, endpoint2[0])
 
-    endpoints = {
-        "opyrator": endpoint,
-        "fastapi": endpoint2[0]
-    }
+    endpoints = f"opyrator_server: {endpoint} | fastapi_server: {endpoint2[0]}"
+
     status = requests.get(
         f'https://jarvis-ai-api.herokuapp.com/update_api_endpoint/?username=dipeshpal&token={st.secrets["token"]}&endpoint={endpoint}')
     print("endpoint------------------------------", endpoints)

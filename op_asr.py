@@ -9,15 +9,17 @@ tokenizer = Wav2Vec2Tokenizer.from_pretrained("facebook/wav2vec2-large-960h-lv60
 
 def predict(file):
     audio, rate = librosa.load(file, sr=16000)
-    inputs = tokenizer(audio, return_tensors="pt", padding="longest")
-    input_values = inputs.input_values.to("cpu")
-    attention_mask = inputs.attention_mask.to("cpu")
+    print("rate", rate)
+    inputs_ = tokenizer(audio, return_tensors="pt", padding="longest")
+    input_values = inputs_.input_values.to("cpu")
+    attention_mask = inputs_.attention_mask.to("cpu")
 
     with torch.no_grad():
         logits = model(input_values, attention_mask=attention_mask).logits
 
     predicted_ids = torch.argmax(logits, dim=-1)
     transcription = tokenizer.batch_decode(predicted_ids)
+    print(transcription)
     return transcription
 
 
@@ -40,5 +42,7 @@ def separate_audio(input: AudioSeparationInput) -> Output:
     with open("my_file.mp3", "wb") as binary_file:
         binary_file.write(input.audio_file.as_bytes())
 
+    print("------------------------------------")
     transcription = predict("my_file.mp3")
+    print(transcription)
     return Output(transcription)

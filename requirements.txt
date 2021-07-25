@@ -7,5 +7,6 @@ opyrator
 librosa
 opyrator
 # apt-get install ffmpeg
+ffmpeg
 numpy==1.18.5
 spleeter

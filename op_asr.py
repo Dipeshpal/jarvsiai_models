@@ -1,16 +1,29 @@
 from transformers import Wav2Vec2ForCTC, Wav2Vec2Tokenizer
 import torch
-import librosa
-import os
-os.system("apt-get install ffmpeg or apt-get install ffmpeg")
-os.system("apt-get install libsndfile1")
+from scipy.io import wavfile
+import numpy as np
+from scipy import interpolate
 
 model = Wav2Vec2ForCTC.from_pretrained("facebook/wav2vec2-large-960h-lv60-self")
 tokenizer = Wav2Vec2Tokenizer.from_pretrained("facebook/wav2vec2-large-960h-lv60-self")
 
 
 def predict(file):
-    audio, rate = librosa.load(file, sr=16000)
+    # audio, rate = librosa.load(file, sr=16000)
+    old_samplerate, old_audio = wavfile.read(file)
+    NEW_SAMPLERATE = 16000
+    if old_samplerate != NEW_SAMPLERATE:
+        duration = old_audio.shape[0] / old_samplerate
+
+        time_old = np.linspace(0, duration, old_audio.shape[0])
+        time_new = np.linspace(0, duration, int(old_audio.shape[0] * NEW_SAMPLERATE / old_samplerate))
+
+        interpolator = interpolate.interp1d(time_old, old_audio.T)
+        new_audio = interpolator(time_new).T
+
+        wavfile.write("out.wav", NEW_SAMPLERATE, np.round(new_audio).astype(old_audio.dtype))
+
+    rate, audio = wavfile.read("out.wav")
     print("rate", rate)
     inputs_ = tokenizer(audio, return_tensors="pt", padding="longest")
     input_values = inputs_.input_values.to("cpu")

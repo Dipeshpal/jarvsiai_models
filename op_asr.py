@@ -7,13 +7,6 @@ import librosa
 # from pydub import AudioSegment
 import os
 
-os.system("""
-apt-get update \
-&& apt-get upgrade -y \
-&& apt-get install -y \
-&& apt-get -y install apt-utils gcc libpq-dev libsndfile-dev \
-""")
-
 model = Wav2Vec2ForCTC.from_pretrained("facebook/wav2vec2-large-960h-lv60-self")
 tokenizer = Wav2Vec2Tokenizer.from_pretrained("facebook/wav2vec2-large-960h-lv60-self")
 

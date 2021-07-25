@@ -75,10 +75,6 @@ def ai_models_jarvis(input: Input) -> Output:
         else:
             conversational_chat_history_ids_ = input.conversational_chat_history_ids
         ans, chat_history_ids = ai_conversation(chat_text=input.conversational_chat_text, chat_history_ids=conversational_chat_history_ids_)
-        print(input.conversational_chat_text)
-        print(input.conversational_chat_history_ids)
-        print(ans)
-        print(chat_history_ids)
         return Output(results=ans, chat_history_ids=chat_history_ids)
     else:
         return Output(results="Help!!! Documentation coming soon...")

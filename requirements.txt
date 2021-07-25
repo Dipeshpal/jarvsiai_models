@@ -2,9 +2,6 @@ torch
 transformers
 pyngrok
 opyrator
-ffmpeg
-numpy
-scipy
-pydub
 librosa
-soundfile
+fastapi
+uvicorn[standard]

@@ -41,7 +41,7 @@ if not hasattr(st, 'already_started_server'):
 
 
     def opyrator_models():
-        os.system("opyrator launch-ui op_asr:separate_audio --port 8080")
+        os.system("opyrator launch-api op:ai_models_jarvis --port 8080")
 
 
     endpoint = ngrok.connect(8080).public_url

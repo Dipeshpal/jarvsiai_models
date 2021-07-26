@@ -35,5 +35,5 @@ async def create_upload_file(file: UploadFile = File(..., mime_type="audio/wav")
     return {"result": ans}
 
 
-if __name__ == "__main__":
-    os.system("uvicorn asr_fastapi:app --reload --reload-dir data")
+# if __name__ == "__main__":
+#     os.system("uvicorn asr_fastapi:app --reload --reload-dir data")

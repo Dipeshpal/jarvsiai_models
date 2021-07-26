@@ -38,7 +38,7 @@ if not hasattr(st, 'already_started_server'):
     status = requests.get(
         f'https://jarvis-ai-api.herokuapp.com/update_api_endpoint/?username=dipeshpal&token={st.secrets["token"]}&endpoint={endpoint}')
     print("endpoint------------------------------", endpoint)
-    os.system("opyrator launch-api models_opyrator:ai_models_jarvis --port 8080")
+    os.system("opyrator launch-ui models_opyrator:ai_models_jarvis --port 8080")
 
 
 # this is the main function in which we define our webpage

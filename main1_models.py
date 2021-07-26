@@ -31,26 +31,20 @@ if not hasattr(st, 'already_started_server'):
         ''')
 
     import os
-
-    import os
     from pyngrok import ngrok
 
 
-    def fastapi_models():
-        os.system("uvicorn asr_fastapi:app --reload --reload-dir data")
-
-
-    endpoint = ngrok.connect(8000).public_url
+    endpoint = ngrok.connect(8080).public_url
     status = requests.get(
-        f'https://jarvis-ai-api.herokuapp.com/update_api_endpoint_asr/?username=dipeshpal&token={st.secrets["token"]}&endpoint={endpoint}')
+        f'https://jarvis-ai-api.herokuapp.com/update_api_endpoint/?username=dipeshpal&token={st.secrets["token"]}&endpoint={endpoint}')
     print("endpoint------------------------------", endpoint)
-    fastapi_models()
+    os.system("opyrator launch-api models_opyrator:ai_models_jarvis --port 8080")
 
 
 # this is the main function in which we define our webpage
 def main():
     # front end elements of the web page
-    st.title('Transformers Q and A Demo [FA]')
+    st.title('Transformers Q and A Demo [OP]')
 
     # following lines create boxes in which user can enter data required to make prediction
     c = st.text_area("Context", "My name is Robert")
@@ -64,5 +58,5 @@ def main():
         print(result)
 
 
-if __name__ == '__main__':
-    main()
+# if __name__ == '__main__':
+#     main()
